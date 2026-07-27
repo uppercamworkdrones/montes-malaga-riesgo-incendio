@@ -19,9 +19,34 @@ Todas las variables se normalizan a una escala 0–1, donde 1 representa el mayo
 | Riesgo meteorológico | FWI (Junta de Andalucía / AEMET) | Escala 0–4 dividida entre 4 |
 | Estrés del combustible | NDVI/NDMI (Sentinel) | Invertido: menor humedad de vegetación → mayor riesgo |
 | Pendiente | MDT (IGN) | Normalizada 0–1 con tope en ~45° |
-| Orientación | MDT (IGN) | Ajuste categórico: laderas sur/suroeste puntúan más alto (más insolación, más sequedad) |
-| Proximidad a incendios históricos | NASA FIRMS | Inversa a la distancia al incendio histórico más cercano |
+| Orientación | MDT (IGN) | Ver tabla de valores fijos abajo |
+| Proximidad a incendios históricos | NASA FIRMS | Decaimiento lineal con distancia de corte (ver detalle abajo) |
 | Interfaz urbano-forestal | Catastro + OpenStreetMap | Inversa a la distancia a caminos/zonas urbanizadas (más exposición/probabilidad de ignición) |
+
+### Tabla de valores para orientación
+
+La orientación se clasifica en 8 sectores según los grados de la ladera (0°–360°, medidos desde el norte). Las laderas sur/suroeste puntúan más alto por mayor insolación y sequedad del combustible:
+
+| Sector | Rango (grados) | Valor de riesgo |
+|---|---|---|
+| Sur (S) | 157.5°–202.5° | 1.0 |
+| Suroeste (SW) / Sureste (SE) | 112.5°–157.5° / 202.5°–247.5° | 0.85 |
+| Oeste (W) / Este (E) | 67.5°–112.5° / 247.5°–292.5° | 0.6 |
+| Noroeste (NW) / Noreste (NE) | 22.5°–67.5° / 292.5°–337.5° | 0.4 |
+| Norte (N) | 337.5°–22.5° | 0.2 |
+| Terreno plano (pendiente ≈ 0°, sin orientación definida) | — | 0.5 (valor neutro) |
+
+### Detalle: proximidad a incendios históricos
+
+Se calcula la distancia desde el centro de cada celda al incendio histórico más cercano registrado en NASA FIRMS. La contribución al riesgo decae linealmente con la distancia, con un corte físico a partir del cual se considera que no hay influencia:
+
+- Distancia = 0 km → valor de riesgo = 1.0
+- Distancia = 5 km → valor de riesgo = 0.0
+- Distancia > 5 km → valor de riesgo = 0.0 (sin influencia; evita que un incendio lejano siga puntuando)
+
+Fórmula: `valor = max(0, 1 - distancia_km / 5)`
+
+El corte de 5 km es un valor inicial razonable para el tamaño del ámbito piloto y puede ajustarse con la validación de campo.
 
 ## Combinación
 
