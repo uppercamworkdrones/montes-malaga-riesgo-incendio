@@ -30,9 +30,14 @@ Convertir datos territoriales (satélite, climáticos, topográficos, histórico
 Un piloto que integra fuentes de datos abiertas y territoriales para generar un **mapa/índice de riesgo de incendio** del área de Montes de Málaga, con foco en:
 
 1. **Ingesta de datos**: variables relevantes para el riesgo (vegetación/combustible, pendiente y orientación, clima reciente y previsto, histórico de incendios, accesos e infraestructura de extinción).
+   - Datos propios capturados con dron (DJI Mavic 4 Pro): validación visual puntual de vegetación y accesos en zonas priorizadas por las capas anteriores. La automatización de vuelos y el uso de drones de terceros quedan fuera de esta fase.
 2. **Modelo de riesgo**: combinación de estas variables en un índice o clasificación de riesgo por zonas, con metodología documentada y trazable.
 3. **Visualización**: un mapa interactivo que permita explorar el riesgo por zonas y priorizar áreas de actuación.
 4. **Validación**: contraste del modelo con conocimiento experto y, en la medida de lo posible, con eventos históricos.
+
+## Alcance real de esta fase
+
+Este piloto lo desarrolla y ejecuta una sola persona (sin equipo multidisciplinar todavía). El objetivo no es lanzar una plataforma operativa, sino demostrar con datos reales que el enfoque funciona, como base para escalarlo después. Los actores institucionales mencionados en "A quién sirve" son a quién se le mostrará el resultado una vez validado, no usuarios activos de esta fase.
 
 ## Qué queda fuera del piloto (por ahora)
 
